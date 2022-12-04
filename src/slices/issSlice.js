@@ -6,6 +6,7 @@ const initialState = { latitude: 0, longitude: 0, timestamp: 0, message: "" };
 export const getIssInfo = createAsyncThunk("iss/getIssInfo", async () => {
   try {
     let res = await issService.getISSInfo();
+    console.log("res", res.data);
     return res.data;
   } catch (e) {
     return e;
@@ -23,8 +24,11 @@ export const issSlice = createSlice({
   extraReducers: {
     [getIssInfo.fulfilled]: (state, action) => {
       // state.user = action.payload.message;
-      state.latitude = parseFloat(action.payload.iss_position.latitude);
-      state.longitude = parseFloat(action.payload.iss_position.longitude);
+      //   state.latitude = parseFloat(action.payload.iss_position.latitude);
+      //   state.longitude = parseFloat(action.payload.iss_position.longitude);
+      state.latitude = action.payload.latitude;
+      state.longitude = action.payload.longitude;
+
       state.timestamp = action.payload.timestamp;
     },
     [getIssInfo.rejected]: (state, action) => {
